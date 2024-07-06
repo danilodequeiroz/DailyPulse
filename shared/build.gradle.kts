@@ -37,12 +37,14 @@ kotlin {
                 implementation(libs.ktor.serialization.kotlinx.json)
                 implementation(libs.kotlinx.datetime)
                 implementation(libs.koin.core)
+                implementation(libs.koin.compose)
                 implementation(libs.sql.coroutines.extensions)
 
                 implementation(compose.runtime)
                 implementation(compose.foundation)
                 implementation(compose.components.resources)
                 implementation(compose.material3)
+                implementation(libs.kamel.images)
                 implementation(libs.compose.material)
             }
         }
