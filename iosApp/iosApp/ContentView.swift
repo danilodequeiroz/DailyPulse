@@ -1,16 +1,18 @@
-import SwiftUI
 import shared
+import SwiftUI
 
 struct ContentView: View {
-
-    var body : some View{
-        ComposeView().ignoreSafeArea(.keyboard)
+    var body: some View {
+        ComposeView().ignoresSafeArea(.keyboard)
     }
 }
-struct ComposeView: UiViewControllerRepresentable{
-    func makeUIViewController(context : Context)-> some UIViewController {
-        MainIOSKit.MainViewController()
+
+struct ComposeView: UIViewControllerRepresentable {
+    typealias UIViewControllerType = UIViewController
+
+    func makeUIViewController(context _: Context) -> UIViewController {
+        MainIOSKt.MainViewContoller()
     }
 
-      func updateUIViewController(_ iuViewController: UIViewControllerType, context: Context) {}
+    func updateUIViewController(_: UIViewControllerType, context _: Context) {}
 }

@@ -6,23 +6,21 @@
 //  Copyright © 2023 orgName. All rights reserved.
 //
 
-import SwiftUI
 import shared
+import SwiftUI
 
 extension SourcesScreen {
-    
     @MainActor
     class SourcesViewModelWrapper: ObservableObject {
-        
         init() {
             viewModel = SourcesInjector().sourcesViewModel
             sourcesState = viewModel.sourcesState.value
         }
-        
+
         let viewModel: SourcesViewModel
-        
+
         @Published var sourcesState: SourcesState
-        
+
         func startObserving() {
             Task {
                 for await sourcesS in viewModel.sourcesState {
@@ -36,21 +34,20 @@ extension SourcesScreen {
 struct SourcesScreen: View {
     @Environment(\.dismiss)
     private var dismiss
-    
+
     @ObservedObject private(set) var viewModel: SourcesScreen.SourcesViewModelWrapper
-    
+
     var body: some View {
         NavigationStack {
             VStack {
-                
                 if let error = viewModel.sourcesState.error {
                     ErrorMessage(message: error)
                 }
-                
+
                 if viewModel.sourcesState.loading {
                     Loader()
                 }
-                
+
                 if !viewModel.sourcesState.sources.isEmpty {
                     ScrollView {
                         LazyVStack(spacing: 10) {
@@ -60,7 +57,7 @@ struct SourcesScreen: View {
                         }
                     }
                 }
-            }.onAppear{
+            }.onAppear {
                 self.viewModel.startObserving()
             }
             .navigationTitle("Sources")
@@ -82,7 +79,7 @@ struct SourceItemView: View {
     let name: String
     let desc: String
     let origin: String
-    
+
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             Text(name)
@@ -94,4 +91,3 @@ struct SourceItemView: View {
         .padding(16)
     }
 }
-

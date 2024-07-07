@@ -6,23 +6,21 @@
 //  Copyright © 2023 orgName. All rights reserved.
 //
 
-import SwiftUI
 import shared
+import SwiftUI
 
 extension ArticlesScreen {
-    
     @MainActor
     class ArticlesViewModelWrapper: ObservableObject {
-        
         let articlesViewModel: ArticlesViewModel
-        
+
         init() {
             articlesViewModel = ArticlesInjector().articlesViewModel
             articlesState = articlesViewModel.articlesState.value
         }
-        
+
         @Published var articlesState: ArticlesState
-        
+
         func startObserving() {
             Task {
                 for await articlesS in articlesViewModel.articlesState {
@@ -34,22 +32,21 @@ extension ArticlesScreen {
 }
 
 struct ArticlesScreen: View {
-    
     @ObservedObject private(set) var viewModel: ArticlesViewModelWrapper
-    
+
     var body: some View {
         VStack {
             AppBar()
-            
+
             if viewModel.articlesState.loading {
                 Loader()
             }
-            
+
             if let error = viewModel.articlesState.error {
                 ErrorMessage(message: error)
             }
-            
-            if(!viewModel.articlesState.articles.isEmpty) {
+
+            if !viewModel.articlesState.articles.isEmpty {
                 ScrollView {
                     LazyVStack(spacing: 10) {
                         ForEach(viewModel.articlesState.articles, id: \.self) { article in
@@ -58,8 +55,8 @@ struct ArticlesScreen: View {
                     }
                 }
             }
-            
-        }.onAppear{
+
+        }.onAppear {
             self.viewModel.startObserving()
         }
     }
@@ -75,7 +72,7 @@ struct AppBar: View {
 
 struct ArticleItemView: View {
     var article: Article
-    
+
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             AsyncImage(url: URL(string: article.imageUrl)) { phase in
@@ -107,10 +104,9 @@ struct Loader: View {
 
 struct ErrorMessage: View {
     var message: String
-    
+
     var body: some View {
         Text(message)
             .font(.title)
     }
 }
-
