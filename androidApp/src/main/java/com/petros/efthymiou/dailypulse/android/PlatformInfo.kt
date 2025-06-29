@@ -9,7 +9,7 @@ object PlatformInfo {
     fun device() = Pair("Device", platform.deviceModel)
     fun density() = Pair("Density", "${platform.density} dots per inch (dpi)")
 
-    fun platformItems():List<Pair<String,String>>{
+    fun platformItems(): List<Pair<String, String>> {
         return listOf(
             operatingSystem(),
             device(),

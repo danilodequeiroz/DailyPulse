@@ -10,39 +10,16 @@ import SwiftUI
 
 struct AboutListView: View {
 
-    private struct RowItem: Hashable {
-        let title : String
-        let subtitle : String
-    }
-
-    private let items: [RowItem] = {
-      let platform : Platform = Platform()
-        platform.logSystemInfo()
-        var result: [RowItem] = [
-            .init(
-                title: "Operating System",
-                subtitle: "\(platform.osName) \(platform.osVersion)"
-            ),
-            .init(
-                title: "Device",
-                subtitle: "\(platform.deviceModel)"
-            ),
-            .init(
-                title: "Density",
-                subtitle: "Scale @\(platform.densityRound)x"
-            )
-        ]
-        return result
-    }()
-    
-    var body: some View {
+   var body: some View {
         List{
-            ForEach(items, id: \.self) { item in
+            let platformItems = PlatformInfo.init().platformItems()
+            ForEach(platformItems.indices, id: \.self) { index in
+                let item = platformItems[index]
                 VStack(alignment: .leading){
-                    Text(item.title)
+                    Text(item.0)
                         .font(.footnote)
                         .foregroundStyle(.secondary)
-                    Text(item.subtitle)
+                    Text(item.1)
                         .font(.footnote)
                         .foregroundStyle(.primary)
                 }
