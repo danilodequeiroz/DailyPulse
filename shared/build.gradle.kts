@@ -29,6 +29,18 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 //put your multiplatform dependencies here
+                implementation(libs.kotlinx.coroutines.core)
+            }
+        }
+        val iosMain by getting {
+            dependencies {
+                //put your iOS dependencies here
+            }
+        }
+        val androidMain by getting {
+            dependencies {
+                //put your Android dependencies here
+                implementation(libs.androidx.lifecycle.viewmodel.ktx)
             }
         }
         val commonTest by getting {
