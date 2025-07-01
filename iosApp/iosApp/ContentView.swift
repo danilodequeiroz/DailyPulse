@@ -3,7 +3,16 @@ import shared
 
 struct ContentView: View {
 	var body: some View {
-        AboutScreen()
+        var viewModel: ArticlesScreen.ArticlesViewModelWrapper {
+           if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] == "1" {
+               return MockSuccessArticlesViewModelWrapper()
+           } else {
+               return ArticlesScreen.ArticlesViewModelWrapper()
+           }
+        }
+        ArticlesScreen(
+            viewModel: viewModel
+        )
 	}
 }
 
