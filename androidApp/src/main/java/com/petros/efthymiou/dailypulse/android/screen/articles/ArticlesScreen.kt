@@ -9,15 +9,24 @@ import com.petros.efthymiou.dailypulse.articles.ArticlesState
 import com.petros.efthymiou.dailypulse.articles.ArticlesViewModel
 
 @Composable
-fun ArticlesScreen(articlesViewModel: ArticlesViewModel) {
+fun ArticlesScreen(
+    articlesViewModel: ArticlesViewModel,
+    onAboutButtonClick: () -> Unit,
+) {
     val articlesState: State<ArticlesState> = articlesViewModel.articlesState.collectAsState()
-    ArticlesScreenContent(articlesState = articlesState.value)
+    ArticlesScreenContent(
+        articlesState = articlesState.value,
+        onAboutButtonClick = onAboutButtonClick
+    )
 }
 
 @Composable
-fun ArticlesScreenContent(articlesState: ArticlesState) {
+fun ArticlesScreenContent(
+    articlesState: ArticlesState,
+    onAboutButtonClick: () -> Unit,
+) {
     Column {
-        AppBar()
+        AppBar(onAboutButtonClick = { onAboutButtonClick.invoke() })
         if (articlesState.loading) {
             Loader()
         }
@@ -37,8 +46,13 @@ fun ArticlesScreenContent(articlesState: ArticlesState) {
 @Preview(name = "Articles Screen - Loading", showBackground = true)
 @Composable
 fun ArticlesScreenPreviewLoading() {
-   ArticlesScreenContent(
-        articlesState = ArticlesState(loading = true, articles = emptyList(), error = null)
+    ArticlesScreenContent(
+        articlesState = ArticlesState(
+            loading = true,
+            articles = emptyList(),
+            error = null,
+        ),
+        onAboutButtonClick = {}
     )
 }
 
@@ -46,6 +60,10 @@ fun ArticlesScreenPreviewLoading() {
 @Composable
 fun ArticlesScreenPreviewError() {
     ArticlesScreenContent(
-        articlesState = ArticlesState(loading = false, articles = emptyList(), error = "Something went wrong...")
+        articlesState = ArticlesState(loading = false,
+            articles = emptyList(),
+            error = "Something went wrong..."
+        ),
+        onAboutButtonClick = {}
     )
 }

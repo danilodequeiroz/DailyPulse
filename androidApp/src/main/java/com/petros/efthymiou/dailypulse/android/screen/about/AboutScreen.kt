@@ -6,8 +6,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -21,11 +25,13 @@ import com.petros.efthymiou.dailypulse.android.PlatformInfo
 @Composable
 fun AboutScreen(
     toolbarTitle: String,
-    pairList : List<Pair<String,String>> = PlatformInfo.platformItems()
+    pairList : List<Pair<String,String>> = PlatformInfo.platformItems(),
+    upButtonClick: () -> Unit,
 ){
     Column {
         Toolbar(
-            title = toolbarTitle
+            title = toolbarTitle,
+            upButtonClick = upButtonClick
         )
         ContentView(
             pairList = pairList
@@ -36,10 +42,19 @@ fun AboutScreen(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Toolbar(
-    title: String
+    title: String,
+    upButtonClick: () -> Unit,
 ){
     TopAppBar(
-        title = { Text(text = title) }
+        title = { Text(text = title) },
+        navigationIcon = {
+            IconButton(onClick = upButtonClick) {
+                Icon(
+                    imageVector = Icons.Default.ArrowBack  ,
+                    contentDescription = "Up Button"
+                )
+            }
+        }
     )
 }
 
@@ -86,7 +101,8 @@ fun RowView(
 @Preview
 fun AboutScreenPreview(){
     AboutScreen(
-        toolbarTitle = "About"
+        toolbarTitle = "About",
+        upButtonClick = {}
     )
 }
 
@@ -115,5 +131,6 @@ fun RowViewInDeviceWidthPreview(){
 fun ToolbarPreview(){
     Toolbar(
         title = "Toolbar Preview \nTitle",
+        upButtonClick = {}
     )
 }

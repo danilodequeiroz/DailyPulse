@@ -11,8 +11,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.petros.efthymiou.dailypulse.Platform
+import com.petros.efthymiou.dailypulse.android.screen.AppScaffold
 import com.petros.efthymiou.dailypulse.android.screen.about.AboutScreen
-import com.petros.efthymiou.dailypulse.android.screen.articles.ArticlesScreen
 import com.petros.efthymiou.dailypulse.android.theme.MyApplicationTheme
 import com.petros.efthymiou.dailypulse.articles.ArticlesViewModel
 
@@ -27,7 +27,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    ArticlesScreen(
+                    AppScaffold(
                         articlesViewModel = articlesViewModel
                     )
                 }
@@ -46,7 +46,8 @@ fun DefaultPreviewLight() {
             color = MaterialTheme.colorScheme.background
         ) {
             AboutScreen(
-                toolbarTitle = text
+                toolbarTitle = text,
+                upButtonClick = {}
             )
         }
     }
@@ -62,7 +63,8 @@ fun DefaultPreviewDark() {
             color = MaterialTheme.colorScheme.background
         ) {
             AboutScreen(
-                toolbarTitle = text
+                toolbarTitle = text,
+                upButtonClick = {}
             )
         }
     }
