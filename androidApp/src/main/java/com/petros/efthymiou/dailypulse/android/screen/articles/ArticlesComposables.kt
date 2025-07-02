@@ -30,8 +30,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
-import com.petros.efthymiou.dailypulse.articles.Article
-import com.petros.efthymiou.dailypulse.articles.mock.ArticlesMock
+import com.petros.efthymiou.dailypulse.articles.domain.model.Article
+import com.petros.efthymiou.dailypulse.articles.domain.mock.ArticlesMock
 
 
 @OptIn(ExperimentalMaterial3Api::class)

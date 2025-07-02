@@ -1,6 +1,6 @@
-package com.petros.efthymiou.dailypulse.articles.mock
+package com.petros.efthymiou.dailypulse.articles.domain.mock
 
-import com.petros.efthymiou.dailypulse.articles.Article
+import com.petros.efthymiou.dailypulse.articles.domain.model.Article
 
 class ArticlesMock {
     val mockArticles = listOf(

@@ -1,48 +1,45 @@
 package com.petros.efthymiou.dailypulse.articles
 
 import com.petros.efthymiou.dailypulse.BaseViewModel
-import com.petros.efthymiou.dailypulse.articles.mock.ArticlesMock
-import kotlinx.coroutines.delay
+import com.petros.efthymiou.dailypulse.articles.data.network.ArticlesService
+import com.petros.efthymiou.dailypulse.articles.domain.usecase.ArticleUseCase
+import io.ktor.client.HttpClient
+import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.serialization.kotlinx.json.json
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import kotlinx.serialization.json.Json
 
 class ArticlesViewModel : BaseViewModel() {
+    private val useCase:ArticleUseCase
     private val _articlesState : MutableStateFlow<ArticlesState> = MutableStateFlow(
         ArticlesState(loading = true)
     )
     val articlesState : StateFlow<ArticlesState> get() = _articlesState
 
     init{
+        val httpClient = HttpClient{
+            install(ContentNegotiation){
+                json(Json {
+                    prettyPrint = true
+                    isLenient = true
+                    ignoreUnknownKeys = true
+                })
+            }
+        }
+
+        val service = ArticlesService(httpClient)
+        useCase = ArticleUseCase(service)
         getArticles()
     }
 
     private fun getArticles(){
         scope.launch {
-            delay(2000)
-
-            _articlesState.emit(ArticlesState(
-                error = "Ops, something went wrong.",
-            ))
-
-            delay(2000)
-
-            _articlesState.emit(ArticlesState(
-                loading = true,
-            ))
-
-            delay(5000)
-
-            val fetchedArticles = fetchArticles()
+           val fetchedArticles = useCase.getArticles()
             _articlesState.emit(ArticlesState(
                 articles = fetchedArticles
             ))
         }
     }
-
-    suspend fun fetchArticles() : List<Article>{
-        return ArticlesMock().mockArticles
-    }
-
-
 }
