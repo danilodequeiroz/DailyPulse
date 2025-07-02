@@ -1,9 +1,27 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
     id("co.touchlab.skie") version "0.4.19"
     kotlin("plugin.serialization") version "1.9.20"
 }
+
+val localProps = Properties().apply {
+    load(rootProject.file("local.properties").inputStream())
+}
+val apiKey = localProps.getProperty("api.key") ?: "nil"
+
+val constantsFile = file("src/commonMain/kotlin/com/petros/efthymiou/dailypulse/Config.kt")
+constantsFile.writeText(
+    """
+    package com.petros.efthymiou.dailypulse
+
+    object Config {
+        const val API_KEY = "$apiKey"
+    }
+    """.trimIndent()
+)
 
 @OptIn(org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi::class)
 kotlin {

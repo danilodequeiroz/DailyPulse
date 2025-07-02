@@ -1,5 +1,6 @@
 package com.petros.efthymiou.dailypulse.articles.data.network
 
+import com.petros.efthymiou.dailypulse.Config
 import com.petros.efthymiou.dailypulse.articles.data.network.model.ArticleRaw
 import com.petros.efthymiou.dailypulse.articles.data.network.model.ArticlesResponse
 import io.ktor.client.HttpClient
@@ -8,7 +9,7 @@ import io.ktor.client.request.get
 
 private const val COUNTRY = "us"
 private const val BUSINESS = "business"
-private const val API_KEY = ""
+private const val API_KEY = Config.API_KEY
 
 class ArticlesService(private val httpClient : HttpClient) {
 
