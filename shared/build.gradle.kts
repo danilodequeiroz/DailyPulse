@@ -10,15 +10,13 @@ plugins {
 val localProps = Properties().apply {
     load(rootProject.file("local.properties").inputStream())
 }
-val apiKey = localProps.getProperty("api.key") ?: "nil"
 
-val constantsFile = file("src/commonMain/kotlin/com/petros/efthymiou/dailypulse/Config.kt")
-constantsFile.writeText(
+file("src/commonMain/kotlin/com/petros/efthymiou/dailypulse/Config.kt").writeText(
     """
     package com.petros.efthymiou.dailypulse
 
     object Config {
-        const val API_KEY = "$apiKey"
+        const val API_KEY = "${localProps.getProperty("api.key") ?: "nil"}"
     }
     """.trimIndent()
 )
