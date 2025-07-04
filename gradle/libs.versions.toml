@@ -14,6 +14,7 @@ navigationCompose = "2.7.5"
 ktorClient = "2.3.5"
 kotlinxDatetime = "0.4.1"
 koin = "3.4.3"
+sqlDelight = "2.0.1"
 
 [libraries]
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
@@ -39,6 +40,12 @@ koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
 
 
+sql-coroutines-extensions = { module = "app.cash.sqldelight:coroutines-extensions", version.ref = "sqlDelight" }
+sql-native-driver = { module = "app.cash.sqldelight:native-driver", version.ref = "sqlDelight" }
+sql-android-driver = { module = "app.cash.sqldelight:android-driver", version.ref = "sqlDelight" }
+sql-desktop-driver = { module = "app.cash.sqldelight:sqlite-driver", version.ref = "sqlDelight" }
+
+
 #shared
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
 androidx-lifecycle-viewmodel-ktx = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
@@ -49,3 +56,5 @@ androidLibrary = { id = "com.android.library", version.ref = "agp" }
 kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 kotlinCocoapods = { id = "org.jetbrains.kotlin.native.cocoapods", version.ref = "kotlin" }
+sqlDelight = { id = "app.cash.sqldelight", version.ref = "sqlDelight" }
+

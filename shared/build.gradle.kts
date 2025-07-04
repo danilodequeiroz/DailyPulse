@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.androidLibrary)
     id("co.touchlab.skie") version "0.4.19"
     kotlin("plugin.serialization") version "1.9.20"
+    alias(libs.plugins.sqlDelight)
 }
 
 val localProps = Properties().apply {
@@ -53,12 +54,14 @@ kotlin {
                 implementation(libs.ktor.serialization.kotlinx.json)
                 implementation(libs.kotlinx.datetime)
                 implementation(libs.koin.core)
+                implementation(libs.sql.coroutines.extensions)
             }
         }
         val iosMain by getting {
             dependencies {
                 //put your iOS dependencies here
                 implementation(libs.ktor.client.darwin)
+                implementation(libs.sql.native.driver)
             }
         }
         val androidMain by getting {
@@ -66,6 +69,7 @@ kotlin {
                 //put your Android dependencies here
                 implementation(libs.androidx.lifecycle.viewmodel.ktx)
                 implementation(libs.ktor.client.android)
+                implementation(libs.sql.android.driver)
             }
         }
         val commonTest by getting {
