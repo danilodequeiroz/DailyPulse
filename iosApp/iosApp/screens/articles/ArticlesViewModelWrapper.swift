@@ -16,12 +16,12 @@ extension ArticlesScreen {
         let articlesViewModel : ArticlesViewModel
         
         init(){
-            articlesViewModel = ArticlesViewModel()
+            articlesViewModel = ArticlesInjector().articlesViewModel
             articlesState = articlesViewModel.articlesState.value
         }
         
         init(mockState: ArticlesState) {
-            self.articlesViewModel = ArticlesViewModel()
+            self.articlesViewModel = ArticlesInjector().articlesViewModel
             self.articlesState = mockState
         }
         
