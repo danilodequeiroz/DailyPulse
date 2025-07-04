@@ -1,0 +1,22 @@
+package com.petros.efthymiou.dailypulse.android
+
+import android.app.Application
+import com.petros.efthymiou.dailypulse.android.di.viewModelsModule
+import com.petros.efthymiou.dailypulse.di.sharedModules
+import org.koin.android.ext.koin.androidContext
+import org.koin.core.context.startKoin
+
+class DailyPulseApplication : Application() {
+
+    override fun onCreate() {
+        super.onCreate()
+        initKoin()
+    }
+
+    private fun initKoin() {
+        startKoin {
+            androidContext(this@DailyPulseApplication)
+            modules(modules = sharedModules + viewModelsModule)
+        }
+    }
+}

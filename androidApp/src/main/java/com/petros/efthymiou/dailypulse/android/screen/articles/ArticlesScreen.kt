@@ -7,10 +7,11 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.tooling.preview.Preview
 import com.petros.efthymiou.dailypulse.articles.ArticlesState
 import com.petros.efthymiou.dailypulse.articles.ArticlesViewModel
+import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun ArticlesScreen(
-    articlesViewModel: ArticlesViewModel,
+    articlesViewModel: ArticlesViewModel = getViewModel(),
     onAboutButtonClick: () -> Unit,
 ) {
     val articlesState: State<ArticlesState> = articlesViewModel.articlesState.collectAsState()
