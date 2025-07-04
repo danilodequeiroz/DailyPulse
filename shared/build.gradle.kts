@@ -87,3 +87,11 @@ android {
         minSdk = 24
     }
 }
+
+sqldelight {
+    databases {
+        create(name = "DailyPulseDatabbase") {
+            packageName = "petros.efthymiou.dailypulse.db"
+        }
+    }
+}
