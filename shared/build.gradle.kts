@@ -90,7 +90,7 @@ android {
 
 sqldelight {
     databases {
-        create(name = "DailyPulseDatabbase") {
+        create(name = "DailyPulseDatabase") {
             packageName = "petros.efthymiou.dailypulse.db"
         }
     }
