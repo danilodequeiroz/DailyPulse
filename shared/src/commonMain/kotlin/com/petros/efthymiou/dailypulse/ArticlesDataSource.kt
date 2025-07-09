@@ -7,6 +7,10 @@ class ArticlesDataSource(
     private val database: DailyPulseDatabase
 ) {
 
+    fun clearArticles() {
+        database.dailyPulseDatabaseQueries.removeAllArticles()
+    }
+
     fun getAllArticlesUsingExplicitLambda(): List<ArticleRaw> {
         return database.dailyPulseDatabaseQueries.selectAllArticles(
             mapper = { title, description, date, url ->
@@ -37,7 +41,24 @@ class ArticlesDataSource(
         ).executeAsList()
     }
 
-    fun mapToArticlesRaw(
+    fun insertArticles(articles: List<ArticleRaw>) {
+        database.dailyPulseDatabaseQueries.transaction {
+            articles.forEach { articleRaw ->
+                insertArticle(article = articleRaw)
+            }
+        }
+    }
+
+    private fun insertArticle(article: ArticleRaw) {
+        database.dailyPulseDatabaseQueries.insertArticle(
+            title = article.title,
+            desc = article.description,
+            date = article.date,
+            imageUrl = article.imageUrl
+        )
+    }
+
+    private fun mapToArticlesRaw(
         title: String,
         desc: String?,
         date: String,
@@ -48,9 +69,6 @@ class ArticlesDataSource(
             description = desc,
             imageUrl = url,
             date = date,
-
-            )
+        )
     }
-
-
 }
