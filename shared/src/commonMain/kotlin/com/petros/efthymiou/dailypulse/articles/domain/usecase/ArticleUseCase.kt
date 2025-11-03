@@ -3,13 +3,12 @@ package com.petros.efthymiou.dailypulse.articles.domain.usecase
 import com.petros.efthymiou.dailypulse.articles.data.network.ArticlesService
 import com.petros.efthymiou.dailypulse.articles.data.network.model.ArticleRaw
 import com.petros.efthymiou.dailypulse.articles.domain.model.Article
-import kotlinx.datetime.Clock
-import kotlinx.datetime.Instant
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.daysUntil
 import kotlinx.datetime.toLocalDateTime
 import kotlinx.datetime.todayIn
 import kotlin.math.abs
+import kotlin.time.ExperimentalTime
 
 private const val DESC_FALLBACK = "Click to find out more."
 private const val IMAGE_FALLBACK =
@@ -27,16 +26,17 @@ class ArticleUseCase(private val service: ArticlesService) {
             Article(
                 title = raw.title,
                 desc = raw.description ?: DESC_FALLBACK,
-                date = getDaysAgoString(raw.publishedAt),
-                imageUri = raw.urlToImage ?: IMAGE_FALLBACK,
+                date = getDaysAgoString(raw.date),
+                imageUri = raw.imageUrl ?: IMAGE_FALLBACK,
             )
         }
     }
 
+    @OptIn(ExperimentalTime::class)
     private fun getDaysAgoString(date: String): String {
-        val today = Clock.System.todayIn(TimeZone.currentSystemDefault())
+        val today = kotlin.time.Clock.System.todayIn(TimeZone.currentSystemDefault())
         val days = today.daysUntil(
-            Instant.parse(date).toLocalDateTime(TimeZone.currentSystemDefault()).date
+            kotlin.time.Instant.parse(date).toLocalDateTime(TimeZone.currentSystemDefault()).date
         )
 
         val result = when {

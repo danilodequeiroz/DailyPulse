@@ -3,9 +3,11 @@ import java.util.Properties
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
-    id("co.touchlab.skie") version "0.4.19"
+    id("co.touchlab.skie") version "0.10.6"
     kotlin("plugin.serialization") version "1.9.20"
     alias(libs.plugins.sqlDelight)
+
+    alias(libs.plugins.compose.compiler) apply false
 }
 
 val localProps = Properties().apply {
@@ -24,15 +26,8 @@ file("src/commonMain/kotlin/com/petros/efthymiou/dailypulse/Config.kt").writeTex
 
 @OptIn(org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi::class)
 kotlin {
-    targetHierarchy.default()
-
-    androidTarget {
-        compilations.all {
-            kotlinOptions {
-                jvmTarget = "1.8"
-            }
-        }
-    }
+    applyDefaultHierarchyTemplate()
+    androidTarget()
     
     listOf(
         iosX64(),
